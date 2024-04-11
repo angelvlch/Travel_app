@@ -54,7 +54,7 @@ Enjoy the best experience with us!''', style: AppFonts.s16Reg),
                       const EdgeInsets.symmetric(vertical: 17, horizontal: 30),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: AppColors.buttonColor),
+                      color: AppColors.primary),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

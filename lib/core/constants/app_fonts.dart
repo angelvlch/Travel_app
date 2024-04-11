@@ -18,42 +18,46 @@ abstract class AppFonts {
     fontSize: 24,
   );
   static TextStyle s16Reg = const TextStyle(
-    fontFamily: 'SF pro regular',
+    fontFamily: 'SF regular',
     fontSize: 16,
   );
   static TextStyle s14Reg = const TextStyle(
-    fontFamily: 'SF pro regular',
+    fontFamily: 'SF regular',
     fontSize: 14,
   );
 
   static TextStyle s18Med = const TextStyle(
-    fontFamily: 'SF pro medium',
+    fontFamily: 'SF medium',
     fontSize: 18,
   );
   static TextStyle s16Med = const TextStyle(
-    fontFamily: 'SF pro medium',
+    fontFamily: 'SF medium',
     fontSize: 16,
   );
   static TextStyle s12Med = const TextStyle(
-    fontFamily: 'SF pro medium',
+    fontFamily: 'SF medium',
     fontSize: 12,
   );
   static TextStyle s20Sem = const TextStyle(
-    fontFamily: 'SF pro semibold',
+    fontFamily: 'SF semibold',
     fontSize: 20,
   );
   static TextStyle s14Sem = const TextStyle(
-    fontFamily: 'SF pro semibold',
+    fontFamily: 'SF semibold',
     fontSize: 14,
   );
 
   static TextStyle s24Bold = const TextStyle(
-    fontFamily: 'SF pro bold',
+    fontFamily: 'SF bold',
     fontSize: 24,
+  );
+  static TextStyle s16Bold = const TextStyle(
+    fontFamily: 'SF bold',
+    fontSize: 16,
   );
 
   static TextStyle s24Med = const TextStyle(
-    fontFamily: 'SF pro medium',
+    fontFamily: 'SF medium',
     fontSize: 24,
   );
 }
