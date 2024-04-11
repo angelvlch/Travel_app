@@ -26,11 +26,13 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(),
       body: ListView.builder(
+        padding: const EdgeInsets.only(left: 11, right: 11),
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
+          return Container(
+            //вынести в виджет
+            margin: const EdgeInsets.symmetric(horizontal: 5),
             child: GestureDetector(
               onTapUp: (details) {
                 setState(() {
