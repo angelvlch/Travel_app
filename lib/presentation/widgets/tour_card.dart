@@ -5,8 +5,15 @@ import 'package:travel_app/domain/entity/tour_entity.dart';
 
 class TourCard extends StatelessWidget {
   final TourEntity tour;
+  final TextStyle font;
+  final double radius;
 
-  const TourCard({super.key, required this.tour});
+  const TourCard({
+    super.key,
+    required this.tour,
+    required this.font,
+    required this.radius,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +31,9 @@ class TourCard extends StatelessWidget {
       child: Align(
           alignment: Alignment.bottomCenter,
           child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(19),
-              bottomRight: Radius.circular(19),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(radius),
+              bottomRight: Radius.circular(radius),
             ),
             child: Stack(
               children: [
@@ -39,9 +46,9 @@ class TourCard extends StatelessWidget {
                     height: 60,
                     decoration: BoxDecoration(
                       color: AppColors.gray.withOpacity(0.03),
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(19),
-                        bottomRight: Radius.circular(19),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(radius),
+                        bottomRight: Radius.circular(radius),
                       ),
                     ),
                   ),
@@ -51,7 +58,7 @@ class TourCard extends StatelessWidget {
                   height: 60,
                   padding: const EdgeInsets.only(left: 16),
                   child: Text('Northern Mountain',
-                      style: AppFonts.s20Sem.copyWith(color: AppColors.white)),
+                      style: font.copyWith(color: AppColors.white)),
                 ),
               ],
             ),

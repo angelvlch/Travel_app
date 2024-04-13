@@ -84,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                 bottom: 16,
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
+                  crossAxisCount: 2, crossAxisSpacing: 13, mainAxisSpacing: 13),
               itemCount: tours.length,
               itemBuilder: (context, index) => _buildGrid(index),
             ),
@@ -100,6 +100,8 @@ class _MainScreenState extends State<MainScreen> {
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6),
         child: TourCard(
+          radius: 19.0,
+          font: AppFonts.s20Sem,
           tour: tours[index],
         ),
       ),
@@ -143,6 +145,10 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildGrid(int index) {
-    return TourCard(tour: tours.first);
+    return TourCard(
+      tour: tours.first,
+      font: AppFonts.s14Sem,
+      radius: 10,
+    );
   }
 }
