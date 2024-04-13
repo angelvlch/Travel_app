@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/config/route/routes.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/domain/entity/tour_entity.dart';
+import 'package:travel_app/presentation/place_screen.dart';
 import 'package:travel_app/presentation/widgets/category_dot.dart';
 
 import 'package:travel_app/presentation/widgets/dots_indicator.dart';
@@ -50,6 +52,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
         title: Text('Discover', style: AppFonts.s32Black),
       ),
@@ -59,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           SizedBox(
             height: 60,
-            child: _createListView(),
+            child: _createListDots(),
           ),
           const SizedBox(height: 14),
           SizedBox(
@@ -86,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, crossAxisSpacing: 13, mainAxisSpacing: 13),
               itemCount: tours.length,
-              itemBuilder: (context, index) => _buildGrid(index),
+              itemBuilder: (context, index) => _buildGrid(tours[index]),
             ),
           ),
         ],
@@ -99,10 +102,17 @@ class _MainScreenState extends State<MainScreen> {
       itemCount: tours.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6),
-        child: TourCard(
-          radius: 19.0,
-          font: AppFonts.s20Sem,
-          tour: tours[index],
+        child: GestureDetector(
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PlaceScreen(tour: tours[index]),
+            ),
+          ),
+          child: TourCard(
+            radius: 19.0,
+            font: AppFonts.s20Sem,
+            tour: tours[index],
+          ),
         ),
       ),
       pageSnapping: true,
@@ -116,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  ListView _createListView() {
+  ListView _createListDots() {
     return ListView.builder(
       padding: const EdgeInsets.only(left: 11, right: 11),
       scrollDirection: Axis.horizontal,
@@ -144,11 +154,18 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildGrid(int index) {
-    return TourCard(
-      tour: tours.first,
-      font: AppFonts.s14Sem,
-      radius: 10,
+  Widget _buildGrid(TourEntity tour) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PlaceScreen(tour: tour),
+        ),
+      ),
+      child: TourCard(
+        tour: tour,
+        font: AppFonts.s14Sem,
+        radius: 10,
+      ),
     );
   }
 }

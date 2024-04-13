@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
-import 'package:travel_app/core/constants/app_fonts.dart';
+
 import 'package:travel_app/domain/entity/tour_entity.dart';
 
 class TourCard extends StatelessWidget {

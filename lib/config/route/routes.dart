@@ -1,6 +1,6 @@
 class Routes {
   Routes._();
-  static const screenSaver = '/';
+  static const boardScreen = '/';
   static const mainScreen = '/main';
-  static const descriptionScreen = '/description';
+  static const place = '/place';
 }
