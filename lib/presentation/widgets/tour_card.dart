@@ -32,14 +32,13 @@ class TourCard extends StatelessWidget {
               children: [
                 ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                    AppColors.black
-                        .withOpacity(0.4), // Замените на нужный вам цвет
+                    AppColors.black.withOpacity(0.55),
                     BlendMode.multiply,
                   ),
                   child: Container(
                     height: 60,
                     decoration: BoxDecoration(
-                      color: AppColors.gray.withOpacity(0.1),
+                      color: AppColors.gray.withOpacity(0.03),
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(19),
                         bottomRight: Radius.circular(19),

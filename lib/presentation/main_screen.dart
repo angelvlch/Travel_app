@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/domain/entity/tour_entity.dart';
-import 'package:travel_app/presentation/widgets/category.dart';
+import 'package:travel_app/presentation/widgets/category_dot.dart';
+
 import 'package:travel_app/presentation/widgets/dots_indicator.dart';
 import 'package:travel_app/presentation/widgets/tour_card.dart';
 
@@ -54,52 +54,82 @@ class _MainScreenState extends State<MainScreen> {
         title: Text('Discover', style: AppFonts.s32Black),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             height: 60,
-            child: ListView.builder(
-              padding: const EdgeInsets.only(left: 11, right: 11),
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                return CategoryDot(
-                  title: categories[index],
-                  isActive: _selectedCategory == index,
-                  onTap: () {
-                    setState(() {
-                      _selectedCategory = index;
-                    });
-                  },
-                );
-              },
-            ),
+            child: _createListView(),
           ),
           const SizedBox(height: 14),
           SizedBox(
             height: MediaQuery.of(context).size.height / 3.2,
             width: double.infinity,
-            child: PageView.builder(
-              itemCount: tours.length,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: TourCard(
-                  tour: tours[index],
-                ),
-              ),
-              pageSnapping: true,
-              controller: PageController(
-                  initialPage: 0, viewportFraction: 0.85, keepPage: false),
-              onPageChanged: (index) => setState(
-                () {
-                  _currentTour = index;
-                },
-              ),
-            ),
+            child: _createCarousel(),
           ),
           const SizedBox(height: 16),
           _createDotsIndicator(),
+          const SizedBox(height: 32),
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Text('Recommended',
+                style: AppFonts.s20Black.copyWith(color: AppColors.black)),
+          ),
+          const SizedBox(height: 18),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: 16,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
+              itemCount: tours.length,
+              itemBuilder: (context, index) => _buildGrid(index),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  PageView _createCarousel() {
+    return PageView.builder(
+      itemCount: tours.length,
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+        child: TourCard(
+          tour: tours[index],
+        ),
+      ),
+      pageSnapping: true,
+      controller: PageController(
+          initialPage: 0, viewportFraction: 0.85, keepPage: false),
+      onPageChanged: (index) => setState(
+        () {
+          _currentTour = index;
+        },
+      ),
+    );
+  }
+
+  ListView _createListView() {
+    return ListView.builder(
+      padding: const EdgeInsets.only(left: 11, right: 11),
+      scrollDirection: Axis.horizontal,
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        return CategoryDot(
+          title: categories[index],
+          isActive: _selectedCategory == index,
+          onTap: () {
+            setState(() {
+              _selectedCategory = index;
+            });
+          },
+        );
+      },
     );
   }
 
@@ -110,5 +140,9 @@ class _MainScreenState extends State<MainScreen> {
       activeColor: AppColors.dotColor,
       unActiveColor: AppColors.unActDotColor,
     );
+  }
+
+  Widget _buildGrid(int index) {
+    return TourCard(tour: tours.first);
   }
 }
