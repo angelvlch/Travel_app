@@ -8,5 +8,6 @@ abstract class AppColors {
 
   static const inputGray = Color(0xff636363);
   static const inactive = Color(0xffB4B0DA);
-  static const countColor = Color(0xff897CFF);
+  static const dotColor = Color(0xff897CFF);
+  static const unActDotColor = Color(0xffB9B1FF);
 }

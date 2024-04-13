@@ -39,13 +39,20 @@ class _MainScreenState extends State<MainScreen> {
       name: 'gfbbbbbbbbb',
     ),
   ];
-  int _selectedIndex = 0;
+  int _selectedCategory = 0;
+  int _currentTour = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text('Discover', style: AppFonts.s32Black),
+        ),
+      ),
       body: Column(
         children: [
           SizedBox(
@@ -61,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
                   child: GestureDetector(
                     onTapUp: (details) {
                       setState(() {
-                        _selectedIndex = index;
+                        _selectedCategory = index;
                       });
                     },
                     child: Column(
@@ -70,14 +77,14 @@ class _MainScreenState extends State<MainScreen> {
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             categories[index],
-                            style: _selectedIndex == index
+                            style: _selectedCategory == index
                                 ? AppFonts.s16Bold
                                     .copyWith(color: AppColors.primary)
                                 : AppFonts.s16Reg
                                     .copyWith(color: AppColors.black),
                           ),
                         ),
-                        if (_selectedIndex == index)
+                        if (_selectedCategory == index)
                           Container(
                             width: 7,
                             height: 7,
@@ -93,9 +100,53 @@ class _MainScreenState extends State<MainScreen> {
               },
             ),
           ),
-          TourCard(tour: tours.first),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 3.2,
+            width: double.infinity,
+            child: PageView.builder(
+              itemCount: tours.length,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: TourCard(
+                  tour: tours[index],
+                ),
+              ),
+              pageSnapping: true,
+              controller: PageController(
+                  initialPage: 0, viewportFraction: 0.88, keepPage: false),
+              onPageChanged: (index) => setState(
+                () {
+                  _currentTour = index;
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          _createDotsIndicator(),
         ],
       ),
+    );
+  }
+
+  Widget _createDotsIndicator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List<Widget>.generate(tours.length, (index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Container(
+            width: 6,
+            height: 6,
+            decoration: ShapeDecoration(
+              color: index == _currentTour
+                  ? AppColors.dotColor
+                  : AppColors.unActDotColor,
+              shape: const OvalBorder(),
+            ),
+          ),
+        );
+      }),
     );
   }
 }

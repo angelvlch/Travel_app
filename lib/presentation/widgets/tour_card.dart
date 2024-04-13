@@ -12,7 +12,7 @@ class TourCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width / 1.1,
-      height: MediaQuery.of(context).size.height / 3.3,
+      height: MediaQuery.of(context).size.height / 3,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(19),
         image: const DecorationImage(
