@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/domain/entity/tour_entity.dart';
+import 'package:travel_app/presentation/widgets/category.dart';
+import 'package:travel_app/presentation/widgets/dots_indicator.dart';
 import 'package:travel_app/presentation/widgets/tour_card.dart';
 
 class MainScreen extends StatefulWidget {
@@ -48,10 +51,7 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Text('Discover', style: AppFonts.s32Black),
-        ),
+        title: Text('Discover', style: AppFonts.s32Black),
       ),
       body: Column(
         children: [
@@ -62,45 +62,19 @@ class _MainScreenState extends State<MainScreen> {
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
               itemBuilder: (context, index) {
-                return Container(
-                  //вынести в виджет
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  child: GestureDetector(
-                    onTapUp: (details) {
-                      setState(() {
-                        _selectedCategory = index;
-                      });
-                    },
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            categories[index],
-                            style: _selectedCategory == index
-                                ? AppFonts.s16Bold
-                                    .copyWith(color: AppColors.primary)
-                                : AppFonts.s16Reg
-                                    .copyWith(color: AppColors.black),
-                          ),
-                        ),
-                        if (_selectedCategory == index)
-                          Container(
-                            width: 7,
-                            height: 7,
-                            decoration: const ShapeDecoration(
-                              color: AppColors.primary,
-                              shape: OvalBorder(),
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
+                return CategoryDot(
+                  title: categories[index],
+                  isActive: _selectedCategory == index,
+                  onTap: () {
+                    setState(() {
+                      _selectedCategory = index;
+                    });
+                  },
                 );
               },
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 14),
           SizedBox(
             height: MediaQuery.of(context).size.height / 3.2,
             width: double.infinity,
@@ -114,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               pageSnapping: true,
               controller: PageController(
-                  initialPage: 0, viewportFraction: 0.88, keepPage: false),
+                  initialPage: 0, viewportFraction: 0.85, keepPage: false),
               onPageChanged: (index) => setState(
                 () {
                   _currentTour = index;
@@ -130,34 +104,11 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _createDotsIndicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List<Widget>.generate(
-        tours.length,
-        (index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2),
-            child: _currentTour == index
-                ? Container(
-                    width: 23,
-                    height: 6,
-                    decoration: ShapeDecoration(
-                      color: AppColors.dotColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3)),
-                    ),
-                  )
-                : Container(
-                    width: 6,
-                    height: 6,
-                    decoration: const ShapeDecoration(
-                      color: AppColors.unActDotColor,
-                      shape: OvalBorder(),
-                    ),
-                  ),
-          );
-        },
-      ).toList(),
+    return DotsIndicator(
+      length: tours.length,
+      currentTour: _currentTour,
+      activeColor: AppColors.dotColor,
+      unActiveColor: AppColors.unActDotColor,
     );
   }
 }

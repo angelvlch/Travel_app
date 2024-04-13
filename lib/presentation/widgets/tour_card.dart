@@ -11,7 +11,7 @@ class TourCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 1.1,
+      width: MediaQuery.of(context).size.width / 1.5,
       height: MediaQuery.of(context).size.height / 3,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(19),
