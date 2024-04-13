@@ -132,21 +132,32 @@ class _MainScreenState extends State<MainScreen> {
   Widget _createDotsIndicator() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List<Widget>.generate(tours.length, (index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: Container(
-            width: 6,
-            height: 6,
-            decoration: ShapeDecoration(
-              color: index == _currentTour
-                  ? AppColors.dotColor
-                  : AppColors.unActDotColor,
-              shape: const OvalBorder(),
-            ),
-          ),
-        );
-      }),
+      children: List<Widget>.generate(
+        tours.length,
+        (index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: _currentTour == index
+                ? Container(
+                    width: 23,
+                    height: 6,
+                    decoration: ShapeDecoration(
+                      color: AppColors.dotColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3)),
+                    ),
+                  )
+                : Container(
+                    width: 6,
+                    height: 6,
+                    decoration: const ShapeDecoration(
+                      color: AppColors.unActDotColor,
+                      shape: OvalBorder(),
+                    ),
+                  ),
+          );
+        },
+      ).toList(),
     );
   }
 }
