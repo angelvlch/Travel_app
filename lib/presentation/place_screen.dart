@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
@@ -15,6 +16,27 @@ class PlaceScreen extends StatefulWidget {
 }
 
 class _PlaceScreenState extends State<PlaceScreen> {
+  List<Map> reviews = [
+    {
+      'foto': 'assets/icons/ava.svg',
+      'name': 'name',
+      'text':
+          'That was such a nice place. The most beautiful place I’ve ever seen. My advice to everyone not to forget to take warm coat',
+    },
+    {
+      'foto': 'assets/icons/avatar.svg',
+      'name': 'name',
+      'text':
+          'That was such a nice place. The most beautiful place I’ve ever seen. My advice to everyone not to forget to take warm coat',
+    },
+    {
+      'foto': 'assets/icons/avatar.svg',
+      'name': 'name',
+      'text':
+          'That was such a nice place. The most beautiful place I’ve ever seen. My advice to everyone not to forget to take warm coat',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,21 +73,88 @@ class _PlaceScreenState extends State<PlaceScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height / 1.6,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 226, 198, 196),
-                  borderRadius: BorderRadius.circular(36)),
-            ),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 1.5,
+                decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(36)),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 24),
+                        child: Text('Mount Fuji', style: AppFonts.s32Black),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          const Icon(Icons.location_on_outlined, weight: 14),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Honshu, Japan',
+                            style: AppFonts.s12Med
+                                .copyWith(color: AppColors.black),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                        ),
+                        child: Text('Description', style: AppFonts.s20Sem),
+                      ),
+                      const SizedBox(height: 6),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
+                            style: AppFonts.s16Reg),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 16, top: 22),
+                          child: Text('Reviews', style: AppFonts.s20Sem)),
+                      Column(
+                          children: List<Widget>.generate(reviews.length,
+                              (index) => _createReview(reviews[index]))),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 9,
+                      ),
+                    ],
+                  ),
+                )),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height / 8,
+              height: MediaQuery.of(context).size.height / 9,
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 255, 59, 45),
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  _createReview(Map review) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 12,
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(review['foto']),
+            ],
+          )
         ],
       ),
     );

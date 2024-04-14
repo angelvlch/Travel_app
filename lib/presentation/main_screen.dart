@@ -72,7 +72,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           const SizedBox(height: 16),
           _createDotsIndicator(),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Text('Recommended',
