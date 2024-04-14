@@ -43,6 +43,18 @@ class _MainScreenState extends State<MainScreen> {
     TourEntity(
       name: 'noname',
     ),
+    TourEntity(
+      name: 'noname',
+    ),
+    TourEntity(
+      name: 'noname',
+    ),
+    TourEntity(
+      name: 'noname',
+    ),
+    TourEntity(
+      name: 'noname',
+    ),
   ];
   int _selectedCategory = 0;
   int _currentTour = 0;
@@ -56,31 +68,33 @@ class _MainScreenState extends State<MainScreen> {
         automaticallyImplyLeading: false,
         title: Text('Discover', style: AppFonts.s32Black),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 60,
-            child: _createListDots(),
-          ),
-          const SizedBox(height: 14),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 3.2,
-            width: double.infinity,
-            child: _createCarousel(),
-          ),
-          const SizedBox(height: 16),
-          _createDotsIndicator(),
-          const SizedBox(height: 22),
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Text('Recommended',
-                style: AppFonts.s20Black.copyWith(color: AppColors.black)),
-          ),
-          const SizedBox(height: 18),
-          Expanded(
-            child: GridView.builder(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 60,
+              child: _createListDots(),
+            ),
+            const SizedBox(height: 14),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 3.2,
+              width: double.infinity,
+              child: _createCarousel(),
+            ),
+            const SizedBox(height: 16),
+            _createDotsIndicator(),
+            const SizedBox(height: 22),
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text('Recommended',
+                  style: AppFonts.s20Black.copyWith(color: AppColors.black)),
+            ),
+            const SizedBox(height: 18),
+            GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
               padding: const EdgeInsets.only(
                 left: 16,
                 right: 16,
@@ -91,8 +105,8 @@ class _MainScreenState extends State<MainScreen> {
               itemCount: tours.length,
               itemBuilder: (context, index) => _buildGrid(tours[index]),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -117,7 +131,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       pageSnapping: true,
       controller: PageController(
-          initialPage: 0, viewportFraction: 0.85, keepPage: false),
+          initialPage: 0, viewportFraction: 0.93, keepPage: false),
       onPageChanged: (index) => setState(
         () {
           _currentTour = index;

@@ -133,29 +133,15 @@ class _PlaceScreenState extends State<PlaceScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-                decoration: const BoxDecoration(color: AppColors.white),
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
-                width: MediaQuery.of(context).size.width,
-                child: CustomElevatedButton(
-                    color: AppColors.primary,
-                    content: _createContent,
-                    onTap: onTap)
-                /* ElevatedButton(
-                style: const ButtonStyle(
-                    padding: MaterialStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 17, horizontal: 30),
-                    ),
-                    backgroundColor:
-                        MaterialStatePropertyAll(AppColors.primary)),
-                onPressed: () {
-                  _createBottomSheet(context);
-                },
-                child: Text(
-                  'Book Now',
-                  style: AppFonts.s18Med.copyWith(color: AppColors.white),
-                ),
-              ), */
-                ),
+              decoration: const BoxDecoration(color: AppColors.white),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
+              width: MediaQuery.of(context).size.width,
+              child: CustomElevatedButton(
+                color: AppColors.primary,
+                content: _createContent,
+                onTap: onTap,
+              ),
+            ),
           ),
         ],
       ),
