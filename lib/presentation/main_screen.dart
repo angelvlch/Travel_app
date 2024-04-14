@@ -26,22 +26,22 @@ class _MainScreenState extends State<MainScreen> {
   ];
   List<TourEntity> tours = [
     TourEntity(
-      name: 'MMM',
+      name: 'noname',
     ),
     TourEntity(
-      name: '12',
+      name: 'noname',
     ),
     TourEntity(
-      name: 'dsds',
+      name: 'noname',
     ),
     TourEntity(
-      name: 'asdadsadsdd',
+      name: 'noname',
     ),
     TourEntity(
-      name: 'MMgfggffgfgM',
+      name: 'noname',
     ),
     TourEntity(
-      name: 'gfbbbbbbbbb',
+      name: 'noname',
     ),
   ];
   int _selectedCategory = 0;

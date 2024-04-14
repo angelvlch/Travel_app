@@ -131,27 +131,43 @@ class _PlaceScreenState extends State<PlaceScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              decoration: BoxDecoration(color:AppColors.white),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: const BoxDecoration(color: AppColors.white),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
               width: MediaQuery.of(context).size.width,
-             
-
-              child: Expanded(
-                child: ElevatedButton(
-                  style: const ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll(AppColors.primary)),
-                  onPressed: () {},
-                  child: Text(
-                    'Book Now',
-                    style: AppFonts.s18Med.copyWith(color: AppColors.white),
-                  ),
+              child: ElevatedButton(
+                style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(AppColors.primary)),
+                onPressed: () {
+                  _createBottomSheet(context);
+                },
+                child: Text(
+                  'Book Now',
+                  style: AppFonts.s18Med.copyWith(color: AppColors.white),
                 ),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<dynamic> _createBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 1.3,
+          decoration: BoxDecoration(
+              color: AppColors.white, borderRadius: BorderRadius.circular(36)),
+          child: Text(
+            'Hello from Bottom Sheet!',
+            style: TextStyle(fontSize: 24),
+          ),
+        );
+      },
     );
   }
 
