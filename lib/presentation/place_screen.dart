@@ -74,7 +74,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
             alignment: Alignment.bottomCenter,
             child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 1.5,
+                height: MediaQuery.of(context).size.height / 1.55,
                 decoration: BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.circular(36)),
@@ -83,7 +83,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 16, top: 24),
+                        padding: const EdgeInsets.only(left: 16, top: 20),
                         child: Text('Mount Fuji', style: AppFonts.s32Black),
                       ),
                       const SizedBox(
@@ -155,18 +155,38 @@ class _PlaceScreenState extends State<PlaceScreen> {
 
   Future<dynamic> _createBottomSheet(BuildContext context) {
     return showModalBottomSheet(
+      isDismissible: false,
       context: context,
       builder: (context) {
         return Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 1.3,
-          decoration: BoxDecoration(
-              color: AppColors.white, borderRadius: BorderRadius.circular(36)),
-          child: Text(
-            'Hello from Bottom Sheet!',
-            style: TextStyle(fontSize: 24),
-          ),
-        );
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(36)),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, top: 20),
+                      child: Text('Info', style: AppFonts.s24Bold),
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.only(right: 20, top: 20),
+                      icon: const Icon(
+                        Icons.close,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ));
       },
     );
   }
