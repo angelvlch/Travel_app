@@ -6,6 +6,7 @@ import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 
 import 'package:travel_app/domain/entity/tour_entity.dart';
+import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
 
 class PlaceScreen extends StatefulWidget {
   final TourEntity tour;
@@ -73,69 +74,77 @@ class _PlaceScreenState extends State<PlaceScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 1.55,
-                decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(36)),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, top: 20),
-                        child: Text('Mount Fuji', style: AppFonts.s32Black),
-                      ),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(width: 16),
-                          const Icon(Icons.location_on_outlined, weight: 14),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Honshu, Japan',
-                            style: AppFonts.s12Med
-                                .copyWith(color: AppColors.black),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 16,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 1.55,
+              decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(36)),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, top: 20),
+                      child: Text('Mount Fuji', style: AppFonts.s32Black),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(width: 16),
+                        const Icon(Icons.location_on_outlined, weight: 14),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Honshu, Japan',
+                          style:
+                              AppFonts.s12Med.copyWith(color: AppColors.black),
                         ),
-                        child: Text('Description', style: AppFonts.s20Sem),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16,
                       ),
-                      const SizedBox(height: 6),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
-                            style: AppFonts.s16Reg),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 16, top: 22),
-                          child: Text('Reviews', style: AppFonts.s20Sem)),
-                      Column(
-                          children: List<Widget>.generate(reviews.length,
-                              (index) => _createReview(reviews[index]))),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 9,
-                      ),
-                    ],
-                  ),
-                )),
+                      child: Text('Description', style: AppFonts.s20Sem),
+                    ),
+                    const SizedBox(height: 6),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
+                          style: AppFonts.s16Reg),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 16, top: 22),
+                        child: Text('Reviews', style: AppFonts.s20Sem)),
+                    Column(
+                        children: List<Widget>.generate(reviews.length,
+                            (index) => _createReview(reviews[index]))),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 9,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              decoration: const BoxDecoration(color: AppColors.white),
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
+                decoration: const BoxDecoration(color: AppColors.white),
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
+                width: MediaQuery.of(context).size.width,
+                child: CustomElevatedButton(
+                    color: AppColors.primary,
+                    content: _createContent,
+                    onTap: onTap)
+                /* ElevatedButton(
                 style: const ButtonStyle(
+                    padding: MaterialStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 17, horizontal: 30),
+                    ),
                     backgroundColor:
                         MaterialStatePropertyAll(AppColors.primary)),
                 onPressed: () {
@@ -145,11 +154,18 @@ class _PlaceScreenState extends State<PlaceScreen> {
                   'Book Now',
                   style: AppFonts.s18Med.copyWith(color: AppColors.white),
                 ),
-              ),
-            ),
+              ), */
+                ),
           ),
         ],
       ),
+    );
+  }
+
+  Text _createContent() {
+    return Text(
+      'Book Now',
+      style: AppFonts.s18Med.copyWith(color: AppColors.white),
     );
   }
 
@@ -215,5 +231,9 @@ class _PlaceScreenState extends State<PlaceScreen> {
         ],
       ),
     );
+  }
+
+  void onTap() {
+    _createBottomSheet(context);
   }
 }
