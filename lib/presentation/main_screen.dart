@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:travel_app/config/route/routes.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
@@ -78,9 +79,10 @@ class _MainScreenState extends State<MainScreen> {
               child: _createListDots(),
             ),
             const SizedBox(height: 14),
-            SizedBox(
+            Container(
               height: MediaQuery.of(context).size.height / 3.2,
               width: double.infinity,
+              padding: EdgeInsets.only(left: 8),
               child: _createCarousel(),
             ),
             const SizedBox(height: 16),
@@ -113,25 +115,21 @@ class _MainScreenState extends State<MainScreen> {
 
   PageView _createCarousel() {
     return PageView.builder(
+      padEnds: false,
       itemCount: tours.length,
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6),
-        child: GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PlaceScreen(tour: tours[index]),
-            ),
-          ),
-          child: TourCard(
-            radius: 19.0,
-            font: AppFonts.s20Sem,
-            tour: tours[index],
-          ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+        ),
+        child: TourCard(
+          radius: 19.0,
+          font: AppFonts.s20Sem,
+          tour: tours[index],
         ),
       ),
       pageSnapping: true,
       controller: PageController(
-          initialPage: 0, viewportFraction: 0.93, keepPage: false),
+          initialPage: 0, viewportFraction: 0.99, keepPage: false),
       onPageChanged: (index) => setState(
         () {
           _currentTour = index;
