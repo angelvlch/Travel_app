@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
-import 'package:travel_app/core/constants/app_icon.dart';
+
 import 'package:travel_app/domain/entity/tour_entity.dart';
 
 class PlaceScreen extends StatefulWidget {
@@ -131,9 +131,22 @@ class _PlaceScreenState extends State<PlaceScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height / 9,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 59, 45),
+              decoration: BoxDecoration(color:AppColors.white),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              width: MediaQuery.of(context).size.width,
+             
+
+              child: Expanded(
+                child: ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(AppColors.primary)),
+                  onPressed: () {},
+                  child: Text(
+                    'Book Now',
+                    style: AppFonts.s18Med.copyWith(color: AppColors.white),
+                  ),
+                ),
               ),
             ),
           ),
@@ -152,9 +165,17 @@ class _PlaceScreenState extends State<PlaceScreen> {
         children: [
           Row(
             children: [
-              SvgPicture.asset(review['foto']),
+              const Icon(Icons.face_5),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(review['name'], style: AppFonts.s16Med),
             ],
-          )
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Text(review['text'], style: AppFonts.s16Med),
         ],
       ),
     );
