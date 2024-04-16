@@ -160,36 +160,58 @@ class _PlaceScreenState extends State<PlaceScreen> {
       isDismissible: false,
       context: context,
       builder: (context) {
-        return Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(36)),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 20),
-                      child: Text('Info', style: AppFonts.s24Bold),
-                    ),
-                    IconButton(
-                      padding: const EdgeInsets.only(right: 20, top: 20),
-                      icon: const Icon(
-                        Icons.close,
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ));
+        return _createSheetContent(context);
       },
+    );
+  }
+
+  Container _createSheetContent(BuildContext context) {
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            color: AppColors.white, borderRadius: BorderRadius.circular(36)),
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _createClose(context),
+            SizedBox(height: 16),
+            Padding(
+              padding: EdgeInsets.only(right: 22),
+              child: Text(
+                'To submit an application for a tour reservation, you need to fill in your information and select the number of people for the reservation',
+                style: AppFonts.s14Reg,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text('Phone number',
+                style: AppFonts.s14Reg.copyWith(color: AppColors.gray))
+          ],
+        ));
+  }
+
+  Row _createClose(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Text('Info', style: AppFonts.s24Bold),
+        ),
+        IconButton(
+          padding: const EdgeInsets.only(top: 20),
+          icon: const Icon(
+            Icons.close,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
     );
   }
 
