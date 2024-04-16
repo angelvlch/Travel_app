@@ -138,6 +138,25 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+/*   ListView _createListDots() {
+    return ListView.builder(
+      padding: const EdgeInsets.only(left: 11, right: 11),
+      scrollDirection: Axis.horizontal,
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        return CategoryDot(
+          title: categories[index],
+          isActive: _selectedCategory == index,
+          onTap: () {
+            setState(() {
+              _selectedCategory = index;
+            });
+          },
+        );
+      },
+    );
+  } */
+
   ListView _createListDots() {
     return ListView.builder(
       padding: const EdgeInsets.only(left: 11, right: 11),

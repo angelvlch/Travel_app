@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_network/image_network.dart';
 
@@ -61,13 +62,16 @@ class TourCard extends StatelessWidget {
             ),
           ),
         ),
-        /*Container(
-          alignment: Alignment.centerLeft,
-          height: 60,
-          padding: const EdgeInsets.only(left: 16),
-          child: Text('Northern Mountain',
-              style: font.copyWith(color: AppColors.white)),
-        ), */
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            alignment: Alignment.centerLeft,
+            height: 60,
+            padding: const EdgeInsets.only(left: 16),
+            child: Text('Northern Mountain',
+                style: font.copyWith(color: AppColors.white)),
+          ),
+        ),
       ],
     );
   }
