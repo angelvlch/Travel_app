@@ -8,6 +8,7 @@ import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
 
 import 'package:travel_app/domain/entity/tour_entity.dart';
+import 'package:travel_app/presentation/widgets/counter_button.dart';
 import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
 
 class PlaceScreen extends StatefulWidget {
@@ -19,6 +20,10 @@ class PlaceScreen extends StatefulWidget {
 }
 
 class _PlaceScreenState extends State<PlaceScreen> {
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
+
+  int _counter = 1;
   List<Map> reviews = [
     {
       'foto': 'assets/icons/ava.svg',
@@ -171,34 +176,85 @@ class _PlaceScreenState extends State<PlaceScreen> {
 
   Container _createSheetContent(BuildContext context) {
     return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            color: AppColors.white, borderRadius: BorderRadius.circular(36)),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _createClose(context),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.only(right: 22),
-              child: Text(
-                'To submit an application for a tour reservation, you need to fill in your information and select the number of people for the reservation',
-                style: AppFonts.s14Reg,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+          color: AppColors.white, borderRadius: BorderRadius.circular(36)),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _createClose(context),
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.only(right: 22),
+            child: Text(
+              'To submit an application for a tour reservation, you need to fill in your information and select the number of people for the reservation',
+              style: AppFonts.s14Reg,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Phone number',
+            style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
+          ),
+          const SizedBox(height: 4),
+          _buildPhoneTextField(),
+          const SizedBox(height: 20),
+          Text(
+            'Commentaries to trip',
+            style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
+          ),
+          const SizedBox(height: 4),
+          _buildCommentField(),
+          const SizedBox(height: 20),
+          Text(
+            'Number of people',
+            style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
+          ),
+          Flex(
+            direction: Axis.horizontal,
+            children: [
+              Flexible(
+                child: CounterButton(
+                  count: _counter,
+                  setNewValue: (countVal) {
+                    _counter = countVal;
+                  },
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Phone number',
-              style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
-            ),
-            const SizedBox(height: 4),
-            _buildPhoneTextField(),
-          ],
-        ));
+              Flexible(
+                child: ListTile(
+                    leading: Icon(Icons.person_outline_rounded),
+                    title: Text('$_counter People', style: AppFonts.s16Reg)),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  TextField _buildCommentField() {
+    return TextField(
+      keyboardType: TextInputType.text,
+      style: AppFonts.s16Reg,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        hintText: 'Write your wishes to trip...',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(
+            100,
+          ),
+          borderSide: const BorderSide(
+            color: Colors.blue,
+            width: 3,
+          ),
+        ),
+      ),
+    );
   }
 
   TextField _buildPhoneTextField() {
@@ -227,7 +283,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
       children: [
         Container(
           padding: const EdgeInsets.only(left: 16),
-          width: 80,
+          width: 75,
           child: _createDropButton(),
         ),
         Padding(
