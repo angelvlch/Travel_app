@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
+import 'package:travel_app/core/constants/app_icon.dart';
 
 import 'package:travel_app/domain/entity/tour_entity.dart';
 import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
@@ -37,6 +39,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
           'That was such a nice place. The most beautiful place I’ve ever seen. My advice to everyone not to forget to take warm coat',
     },
   ];
+  String selectedValue = AppIcon.flagKg;
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +161,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
   Future<dynamic> _createBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       isDismissible: false,
+      isScrollControlled: true,
       context: context,
       builder: (context) {
         return _createSheetContent(context);
@@ -171,26 +175,91 @@ class _PlaceScreenState extends State<PlaceScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
             color: AppColors.white, borderRadius: BorderRadius.circular(36)),
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _createClose(context),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Padding(
-              padding: EdgeInsets.only(right: 22),
+              padding: const EdgeInsets.only(right: 22),
               child: Text(
                 'To submit an application for a tour reservation, you need to fill in your information and select the number of people for the reservation',
                 style: AppFonts.s14Reg,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text('Phone number',
-                style: AppFonts.s14Reg.copyWith(color: AppColors.gray))
+            Text(
+              'Phone number',
+              style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
+            ),
+            const SizedBox(height: 4),
+            _buildPhoneTextField(),
           ],
         ));
+  }
+
+  TextField _buildPhoneTextField() {
+    return TextField(
+      keyboardType: TextInputType.phone,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(0),
+        hintText: '_ _ _ _ _ _  _ _ _',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(
+            100,
+          ),
+          borderSide: const BorderSide(
+            color: Colors.blue,
+            width: 3,
+          ),
+        ),
+        prefixIcon: _createIcon(),
+      ),
+    );
+  }
+
+  Row _createIcon() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(left: 16),
+          width: 80,
+          child: _createDropButton(),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('+ 996  ', style: AppFonts.s16Reg),
+        ),
+      ],
+    );
+  }
+
+  DropdownButtonFormField<String> _createDropButton() {
+    return DropdownButtonFormField(
+      decoration: const InputDecoration(enabled: false),
+      elevation: 0,
+      icon: const Icon(
+        Icons.keyboard_arrow_down_rounded,
+        color: AppColors.black,
+      ),
+      value: selectedValue,
+      onChanged: (String? newValue) {
+        setState(() {
+          selectedValue = newValue!;
+        });
+      },
+      items:
+          [AppIcon.flagKg, AppIcon.flagKz, AppIcon.flagRu].map((String value) {
+        return DropdownMenuItem(
+          value: value,
+          child: SvgPicture.asset(value),
+        );
+      }).toList(),
+    );
   }
 
   Row _createClose(BuildContext context) {
