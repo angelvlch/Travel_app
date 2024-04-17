@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_app/core/constants/app_colors.dart';
+import 'package:travel_app/core/constants/app_fonts.dart';
 
 class CounterButton extends StatelessWidget {
-  final int count;
+  int count;
   final Function setNewValue;
 
-  const CounterButton(
-      {super.key, required this.count, required this.setNewValue});
+  CounterButton({super.key, required this.count, required this.setNewValue});
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +16,57 @@ class CounterButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              color: const Color.fromARGB(255, 200, 175, 173),
-              child: Text('-'),
+          Wrap(children: [
+            SizedBox(
+              height: 36,
+              width: 29,
+              child: IconButton(
+                onPressed: () {
+                  if (count != 1) {
+                    setNewValue(--count);
+                  }
+                },
+                icon: Icon(
+                  Icons.mic_external_off,
+                  color: AppColors.white,
+                  size: 15,
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(count == 1
+                      ? AppColors.inactive
+                      : AppColors.dotColor), // изменение цвета кнопки
+                ),
+              ),
+            ),
+          ]),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Text(
+              '$count',
+              style: AppFonts.s16Bold,
             ),
           ),
-          Text('$count'),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              color: const Color.fromARGB(255, 225, 197, 195),
-              child: Text('-'),
+          Wrap(children: [
+            SizedBox(
+              height: 36,
+              width: 29,
+              child: IconButton(
+                onPressed: () {
+                  setNewValue(++count);
+                },
+                icon: Icon(
+                  Icons.add,
+                  color: AppColors.white,
+                  size: 15,
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      AppColors.dotColor), // изменение цвета кнопки
+                ),
+              ),
             ),
-          ),
+          ]),
         ],
       ),
     );
