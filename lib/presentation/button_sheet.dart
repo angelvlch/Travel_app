@@ -20,6 +20,14 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
   TextEditingController _commentController = TextEditingController();
   int _counter = 1;
 
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _commentController.dispose();
+
+    super.dispose();
+  }
+
   bool get _isDone {
     if (_phoneController.text.isEmpty || _commentController.text.isEmpty) {
       return false;
@@ -33,7 +41,8 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
       keyboardType: TextInputType.text,
       style: AppFonts.s16Reg,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         hintText: 'Write your wishes to trip...',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
@@ -53,7 +62,7 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
       controller: _phoneController,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(0),
+        contentPadding: const EdgeInsets.all(0),
         hintText: '_ _ _ _ _ _  _ _ _',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
@@ -187,13 +196,13 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
               ),
               Flexible(
                 child: ListTile(
-                    contentPadding: EdgeInsets.only(left: 20),
-                    leading: Icon(Icons.person_outline_rounded),
+                    contentPadding: const EdgeInsets.only(left: 20),
+                    leading: const Icon(Icons.person_outline_rounded),
                     title: Text('$_counter People', style: AppFonts.s16Reg)),
               ),
             ],
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           Container(
             width: MediaQuery.sizeOf(context).width,
             child: CustomElevatedButton(
