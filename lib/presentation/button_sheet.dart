@@ -16,9 +16,10 @@ class ContentSheetBottom extends StatefulWidget {
 
 class _ContentSheetBottomState extends State<ContentSheetBottom> {
   String selectedValue = AppIcon.flagKg;
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _commentController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
   int _counter = 1;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -35,8 +36,9 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
     return true;
   }
 
-  TextField _buildCommentField() {
-    return TextField(
+  TextFormField _buildCommentField() {
+    return TextFormField(
+      validator: (value) => _fieldValidate(value!),
       controller: _commentController,
       keyboardType: TextInputType.text,
       style: AppFonts.s16Reg,
@@ -57,8 +59,9 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
     );
   }
 
-  TextField _buildPhoneTextField() {
-    return TextField(
+  TextFormField _buildPhoneTextField() {
+    return TextFormField(
+      validator: (value) => _fieldValidate(value!),
       controller: _phoneController,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
@@ -119,7 +122,7 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
     );
   }
 
-  Row _createClose(BuildContext context) {
+  Row _createCloseField(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -149,72 +152,90 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
       decoration: BoxDecoration(
           color: AppColors.white, borderRadius: BorderRadius.circular(36)),
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _createClose(context),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.only(right: 22),
-            child: Text(
-              'To submit an application for a tour reservation, you need to fill in your information and select the number of people for the reservation',
-              style: AppFonts.s14Reg,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _createCloseField(context),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.only(right: 22),
+              child: Text(
+                'To submit an application for a tour reservation, you need to fill in your information and select the number of people for the reservation',
+                style: AppFonts.s14Reg,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            'Phone number',
-            style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
-          ),
-          const SizedBox(height: 4),
-          _buildPhoneTextField(),
-          const SizedBox(height: 20),
-          Text(
-            'Commentaries to trip',
-            style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
-          ),
-          const SizedBox(height: 4),
-          _buildCommentField(),
-          const SizedBox(height: 20),
-          Text(
-            'Number of people',
-            style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CounterButton(
-                count: _counter,
-                setNewValue: (countVal) {
-                  setState(() {
-                    // использование setState из StatefulBuilder
-                    _counter = countVal;
-                  });
-                },
-              ),
-              Flexible(
-                child: ListTile(
-                    contentPadding: const EdgeInsets.only(left: 20),
-                    leading: const Icon(Icons.person_outline_rounded),
-                    title: Text('$_counter People', style: AppFonts.s16Reg)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 40),
-          Container(
-            width: MediaQuery.sizeOf(context).width,
-            child: CustomElevatedButton(
-                color: _isDone ? AppColors.primary : AppColors.unActDotColor,
-                content: _createContent,
-                onTap: () {
-                  //_isDone;
-                }),
-          )
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Phone number',
+              style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
+            ),
+            const SizedBox(height: 4),
+            _buildPhoneTextField(),
+            const SizedBox(height: 20),
+            Text(
+              'Commentaries to trip',
+              style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
+            ),
+            const SizedBox(height: 4),
+            _buildCommentField(),
+            const SizedBox(height: 20),
+            Text(
+              'Number of people',
+              style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CounterButton(
+                  count: _counter,
+                  setNewValue: (countVal) {
+                    setState(() {
+                      _counter = countVal;
+                    });
+                  },
+                ),
+                Flexible(
+                  child: ListTile(
+                      contentPadding: const EdgeInsets.only(left: 20),
+                      leading: const Icon(Icons.person_outline_rounded),
+                      title: Text('$_counter People', style: AppFonts.s16Reg)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 40),
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: CustomElevatedButton(
+                  color: _isDone ? AppColors.primary : AppColors.unActDotColor,
+                  content: _createContent,
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pop(context);
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+
+                    //_isDone;
+                  }),
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  String? _fieldValidate(String value) {
+    if (value.isEmpty) {
+      return 'Заполните поле';
+    }
+    return null;
   }
 
   Text _createContent() {
