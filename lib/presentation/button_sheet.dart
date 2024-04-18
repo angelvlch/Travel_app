@@ -16,12 +16,20 @@ class ContentSheetBottom extends StatefulWidget {
 
 class _ContentSheetBottomState extends State<ContentSheetBottom> {
   String selectedValue = AppIcon.flagKg;
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController commentController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _commentController = TextEditingController();
   int _counter = 1;
+
+  bool get _isDone {
+    if (_phoneController.text.isEmpty || _commentController.text.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
   TextField _buildCommentField() {
     return TextField(
-      controller: phoneController,
+      controller: _commentController,
       keyboardType: TextInputType.text,
       style: AppFonts.s16Reg,
       decoration: InputDecoration(
@@ -42,7 +50,7 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
 
   TextField _buildPhoneTextField() {
     return TextField(
-      controller: phoneController,
+      controller: _phoneController,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(0),
@@ -185,14 +193,15 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
               ),
             ],
           ),
-          SizedBox(height: 50),
+          SizedBox(height: 40),
           Container(
             width: MediaQuery.sizeOf(context).width,
-            padding: EdgeInsets.symmetric(vertical: 0),
             child: CustomElevatedButton(
-                color: AppColors.unActDotColor,
+                color: _isDone ? AppColors.primary : AppColors.unActDotColor,
                 content: _createContent,
-                onTap: () {}),
+                onTap: () {
+                  //_isDone;
+                }),
           )
         ],
       ),
