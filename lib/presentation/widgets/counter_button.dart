@@ -14,6 +14,7 @@ class CounterButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
+        color: AppColors.lightGray,
       ),
       child: Row(
         children: [
@@ -27,7 +28,7 @@ class CounterButton extends StatelessWidget {
                     setNewValue(--count);
                   }
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.mic_external_off,
                   color: AppColors.white,
                   size: 15,
@@ -55,7 +56,7 @@ class CounterButton extends StatelessWidget {
                 onPressed: () {
                   setNewValue(++count);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.add,
                   color: AppColors.white,
                   size: 15,

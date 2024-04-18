@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
 import 'package:travel_app/presentation/widgets/counter_button.dart';
+import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
 
 class ContentSheetBottom extends StatefulWidget {
   const ContentSheetBottom({super.key});
@@ -14,10 +16,12 @@ class ContentSheetBottom extends StatefulWidget {
 
 class _ContentSheetBottomState extends State<ContentSheetBottom> {
   String selectedValue = AppIcon.flagKg;
-
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
   int _counter = 1;
   TextField _buildCommentField() {
     return TextField(
+      controller: phoneController,
       keyboardType: TextInputType.text,
       style: AppFonts.s16Reg,
       decoration: InputDecoration(
@@ -38,6 +42,7 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
 
   TextField _buildPhoneTextField() {
     return TextField(
+      controller: phoneController,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(0),
@@ -161,27 +166,43 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
             style: AppFonts.s14Reg.copyWith(color: AppColors.gray),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Flexible(
-                child: CounterButton(
-                  count: _counter,
-                  setNewValue: (countVal) {
-                    setState(() {
-                      // использование setState из StatefulBuilder
-                      _counter = countVal;
-                    });
-                  },
-                ),
+              CounterButton(
+                count: _counter,
+                setNewValue: (countVal) {
+                  setState(() {
+                    // использование setState из StatefulBuilder
+                    _counter = countVal;
+                  });
+                },
               ),
               Flexible(
                 child: ListTile(
+                    contentPadding: EdgeInsets.only(left: 20),
                     leading: Icon(Icons.person_outline_rounded),
                     title: Text('$_counter People', style: AppFonts.s16Reg)),
-              )
+              ),
             ],
+          ),
+          SizedBox(height: 50),
+          Container(
+            width: MediaQuery.sizeOf(context).width,
+            padding: EdgeInsets.symmetric(vertical: 0),
+            child: CustomElevatedButton(
+                color: AppColors.unActDotColor,
+                content: _createContent,
+                onTap: () {}),
           )
         ],
       ),
+    );
+  }
+
+  Text _createContent() {
+    return Text(
+      'Submit',
+      style: AppFonts.s18Med.copyWith(color: AppColors.white),
     );
   }
 }

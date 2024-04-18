@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
 
 import 'package:travel_app/domain/entity/tour_entity.dart';
-import 'package:travel_app/presentation/widgets/button_sheet.dart';
-import 'package:travel_app/presentation/widgets/counter_button.dart';
+import 'package:travel_app/presentation/button_sheet.dart';
+
 import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
 
 class PlaceScreen extends StatefulWidget {
