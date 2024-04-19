@@ -29,7 +29,7 @@ class CounterButton extends StatelessWidget {
                   }
                 },
                 icon: const Icon(
-                  Icons.mic_external_off,
+                  Icons.remove,
                   color: AppColors.white,
                   size: 15,
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
@@ -21,6 +22,11 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
   int _counter = 1;
   final _formKey = GlobalKey<FormState>();
 
+  var maskFormatter = MaskTextInputFormatter(
+    mask: '### ### ###',
+    filter: {"#": RegExp(r'[0-9]')},
+    // type: MaskAutoCompletionType.lazy
+  );
   @override
   void dispose() {
     _phoneController.dispose();
@@ -61,12 +67,13 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
 
   TextFormField _buildPhoneTextField() {
     return TextFormField(
+      inputFormatters: [maskFormatter],
       validator: (value) => _fieldValidate(value!),
       controller: _phoneController,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(0),
-        hintText: '_ _ _ _ _ _  _ _ _',
+        hintText: '___  ___  ___',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
             100,
@@ -215,20 +222,47 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       Navigator.pop(context);
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+
+                      _buildDialog(context);
                     }
 
-                    //_isDone;
+             
                   }),
             )
           ],
         ),
       ),
     );
+  }
+
+  Future<dynamic> _buildDialog(BuildContext context) {
+    return showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            'Your trip has been booked!',
+                            style: AppFonts.s24Black.copyWith(fontSize: 20),
+                          ),
+                          actions: <Widget>[
+                            SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.sizeOf(context).width,
+                              child: CustomElevatedButton(
+                                color: AppColors.primary,
+                                content: () => Text('Ok',
+                                    style: AppFonts.s24Med
+                                        .copyWith(color: AppColors.white)),
+                                onTap: () => Navigator.of(context).pop(),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
   }
 
   String? _fieldValidate(String value) {
