@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -225,8 +224,6 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
 
                       _buildDialog(context);
                     }
-
-             
                   }),
             )
           ],
@@ -237,32 +234,31 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
 
   Future<dynamic> _buildDialog(BuildContext context) {
     return showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text(
-                            'Your trip has been booked!',
-                            style: AppFonts.s24Black.copyWith(fontSize: 20),
-                          ),
-                          actions: <Widget>[
-                            SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.sizeOf(context).width,
-                              child: CustomElevatedButton(
-                                color: AppColors.primary,
-                                content: () => Text('Ok',
-                                    style: AppFonts.s24Med
-                                        .copyWith(color: AppColors.white)),
-                                onTap: () => Navigator.of(context).pop(),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Your trip has been booked!',
+            style: AppFonts.s24Black.copyWith(fontSize: 20),
+          ),
+          actions: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: CustomElevatedButton(
+                color: AppColors.primary,
+                content: () => Text('Ok',
+                    style: AppFonts.s24Med.copyWith(color: AppColors.white)),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String? _fieldValidate(String value) {

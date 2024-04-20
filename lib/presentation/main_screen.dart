@@ -1,15 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:travel_app/config/route/routes.dart';
+import 'package:travel_app/config/route/app_router.gr.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/domain/entity/tour_entity.dart';
 import 'package:travel_app/presentation/place_screen.dart';
 import 'package:travel_app/presentation/widgets/category_dot.dart';
-
 import 'package:travel_app/presentation/widgets/dots_indicator.dart';
 import 'package:travel_app/presentation/widgets/tour_card.dart';
 
+@RoutePage()
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -122,6 +122,7 @@ class _MainScreenState extends State<MainScreen> {
           horizontal: 8,
         ),
         child: TourCard(
+          onTap: () => _onTap(tours[index]),
           radius: 19.0,
           font: AppFonts.s20Sem,
           tour: tours[index],
@@ -137,25 +138,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
-/*   ListView _createListDots() {
-    return ListView.builder(
-      padding: const EdgeInsets.only(left: 11, right: 11),
-      scrollDirection: Axis.horizontal,
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        return CategoryDot(
-          title: categories[index],
-          isActive: _selectedCategory == index,
-          onTap: () {
-            setState(() {
-              _selectedCategory = index;
-            });
-          },
-        );
-      },
-    );
-  } */
 
   ListView _createListDots() {
     return ListView.builder(
@@ -193,10 +175,15 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       child: TourCard(
+        onTap: () => _onTap(tour),
         tour: tour,
         font: AppFonts.s14Sem,
         radius: 10,
       ),
     );
+  }
+
+  _onTap(TourEntity tour) {
+    AutoRouter.of(context).push(PlaceRoute(tour: tour));
   }
 }

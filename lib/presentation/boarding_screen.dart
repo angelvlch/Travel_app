@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:travel_app/config/route/app_router.gr.dart';
 import 'package:travel_app/config/route/routes.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
@@ -8,16 +9,17 @@ import 'package:travel_app/core/constants/app_icon.dart';
 import 'package:travel_app/core/constants/app_images.dart';
 import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
 
-class EnterScreen extends StatefulWidget {
-  const EnterScreen({super.key});
+@RoutePage()
+class BoardingScreen extends StatefulWidget {
+  const BoardingScreen({super.key});
 
   @override
-  State<EnterScreen> createState() => _EnterScreenState();
+  State<BoardingScreen> createState() => _BoardingScreenState();
 }
 
-class _EnterScreenState extends State<EnterScreen> {
+class _BoardingScreenState extends State<BoardingScreen> {
   void _onTap() {
-    Navigator.pushNamed(context, Routes.mainScreen);
+    AutoRouter.of(context).push(const MainRoute());
   }
 
   @override

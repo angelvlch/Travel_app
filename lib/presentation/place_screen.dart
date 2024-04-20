@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
-
 import 'package:travel_app/domain/entity/tour_entity.dart';
 import 'package:travel_app/presentation/button_sheet.dart';
-
 import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
 
+@RoutePage()
 class PlaceScreen extends StatefulWidget {
   final TourEntity tour;
   const PlaceScreen({super.key, required this.tour});
