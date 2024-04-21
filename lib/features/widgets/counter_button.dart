@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 
 class CounterButton extends StatelessWidget {
-  int count;
+  final int count;
   final Function setNewValue;
 
-  CounterButton({super.key, required this.count, required this.setNewValue});
+  const CounterButton(
+      {super.key, required this.count, required this.setNewValue});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,8 @@ class CounterButton extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   if (count != 1) {
-                    setNewValue(--count);
+                    int newCount = count - 1;
+                    setNewValue(newCount);
                   }
                 },
                 icon: const Icon(
@@ -54,7 +55,8 @@ class CounterButton extends StatelessWidget {
               width: 29,
               child: IconButton(
                 onPressed: () {
-                  setNewValue(++count);
+                  int newCount = count + 1;
+                  setNewValue(newCount);
                 },
                 icon: const Icon(
                   Icons.add,

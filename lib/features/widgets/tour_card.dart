@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
-import 'package:travel_app/domain/entity/tour_entity.dart';
+import 'package:travel_app/features/main/domain/entity/tour_entity.dart';
 
 class TourCard extends StatelessWidget {
   final TourEntity tour;

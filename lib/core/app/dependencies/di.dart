@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:travel_app/data/api/api.dart';
+import 'package:travel_app/features/main/data/api/api.dart';
 
 final getIt = GetIt.instance;
 

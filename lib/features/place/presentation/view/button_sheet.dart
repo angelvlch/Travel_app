@@ -4,8 +4,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
-import 'package:travel_app/presentation/widgets/counter_button.dart';
-import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
+import 'package:travel_app/features/widgets/counter_button.dart';
+import 'package:travel_app/features/widgets/custom_elevated_button.dart';
 
 class ContentSheetBottom extends StatefulWidget {
   const ContentSheetBottom({super.key});
@@ -43,7 +43,7 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
 
   TextFormField _buildCommentField() {
     return TextFormField(
-      validator: (value) => _fieldValidate(value!),
+      validator: (value) => _fieldValidate(value!, false),
       controller: _commentController,
       keyboardType: TextInputType.text,
       style: AppFonts.s16Reg,
@@ -67,12 +67,12 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
   TextFormField _buildPhoneTextField() {
     return TextFormField(
       inputFormatters: [maskFormatter],
-      validator: (value) => _fieldValidate(value!),
+      validator: (value) => _fieldValidate(value!, true),
       controller: _phoneController,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(0),
-        hintText: '___  ___  ___',
+        hintText: '_ _ _  _ _ _  _ _ _',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
             100,
@@ -261,9 +261,12 @@ class _ContentSheetBottomState extends State<ContentSheetBottom> {
     );
   }
 
-  String? _fieldValidate(String value) {
+  String? _fieldValidate(String value, bool isPhoneField) {
     if (value.isEmpty) {
       return 'Заполните поле';
+    }
+    if (isPhoneField && value.length < 9) {
+      return 'Длина должна быть равна 9';
     }
     return null;
   }

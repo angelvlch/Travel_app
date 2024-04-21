@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/config/route/app_router.gr.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
-import 'package:travel_app/domain/entity/tour_entity.dart';
-import 'package:travel_app/presentation/place_screen.dart';
-import 'package:travel_app/presentation/widgets/category_dot.dart';
-import 'package:travel_app/presentation/widgets/dots_indicator.dart';
-import 'package:travel_app/presentation/widgets/tour_card.dart';
+import 'package:travel_app/features/main/domain/entity/tour_entity.dart';
+import 'package:travel_app/features/place/presentation/view/place_screen.dart';
+import 'package:travel_app/features/widgets/category_dot.dart';
+import 'package:travel_app/features/widgets/dots_indicator.dart';
+import 'package:travel_app/features/widgets/tour_card.dart';
 
 @RoutePage()
 class MainScreen extends StatefulWidget {
@@ -114,6 +114,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   PageView _createCarousel() {
+    var pageController =
+        PageController(initialPage: 0, viewportFraction: 0.99, keepPage: false);
     return PageView.builder(
       padEnds: false,
       itemCount: tours.length,
@@ -129,8 +131,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       pageSnapping: true,
-      controller: PageController(
-          initialPage: 0, viewportFraction: 0.99, keepPage: false),
+      controller: pageController,
       onPageChanged: (index) => setState(
         () {
           _currentTour = index;

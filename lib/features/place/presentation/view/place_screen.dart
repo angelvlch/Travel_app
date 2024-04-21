@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
-import 'package:travel_app/domain/entity/tour_entity.dart';
-import 'package:travel_app/presentation/button_sheet.dart';
-import 'package:travel_app/presentation/widgets/custom_elevated_button.dart';
+import 'package:travel_app/features/main/domain/entity/tour_entity.dart';
+import 'package:travel_app/features/place/presentation/view/button_sheet.dart';
+import 'package:travel_app/features/widgets/custom_elevated_button.dart';
 
 @RoutePage()
 class PlaceScreen extends StatefulWidget {
