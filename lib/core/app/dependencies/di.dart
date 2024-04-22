@@ -6,5 +6,5 @@ final getIt = GetIt.instance;
 
 void setupDependencies() {
   getIt.registerSingleton<Dio>(Dio());
-  getIt.registerSingleton<TourApiImp>(TourApiImp(dio: getIt<Dio>()));
+  getIt.registerSingleton<CategoryApiImp>(CategoryApiImp(dio: getIt<Dio>()));
 }
