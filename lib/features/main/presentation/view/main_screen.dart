@@ -18,13 +18,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final categories = [
-    'Popular',
-    'Featured',
-    'Most Visited',
-    'Europe',
-    'Asia',
-  ];
+  @override
+  void initState() {
+    super.initState();
+  }
+
   List<TourEntity> tours = [
     TourEntity(
       name: 'noname',
