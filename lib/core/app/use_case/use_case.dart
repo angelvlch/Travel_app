@@ -1,3 +1,3 @@
 abstract class UseCase<Entity, Params> {
-  Future<Entity> call({Params params});
+  Future<Entity> call(Params params);
 }

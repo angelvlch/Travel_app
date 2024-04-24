@@ -1,5 +1,3 @@
-import 'package:travel_app/features/main/data/mapper/tour_mapper.dart';
-
 class TourModel {
   final int? id;
   final String? name;

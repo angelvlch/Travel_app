@@ -4,6 +4,6 @@ import 'package:travel_app/features/main/data/data_source/api.dart';
 import 'package:travel_app/my_app.dart';
 
 void main() {
-  // CategoryApiImp(dio: Dio()).getCategories();
+  TourCategoryApiImp(dio: Dio()).getTourCategories(1);
   runApp(const MyApp());
 }
