@@ -204,6 +204,7 @@ class _MainScreenState extends State<MainScreen> {
                   onTap: () {
                     setState(() {
                       _selectedCategory = index;
+                      _currentPage = 0;
                     });
                     _blocTour
                         .add(FetchCategoriesTours(id: _selectedCategory + 1));
