@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/config/route/app_router.gr.dart';
+import 'package:travel_app/core/app/dependencies/di.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/features/main/data/data_source/api.dart';
@@ -30,36 +31,12 @@ class _MainScreenState extends State<MainScreen> {
   final pageController =
       PageController(initialPage: 0, viewportFraction: 0.99, keepPage: false);
   final AppBloc _blocTour = AppBloc(
-    CategoryUseCase(
-      repo: CategoryRepoImpl(
-        dataSource: CategoryApiImp(
-          dio: Dio(),
-        ),
-      ),
-    ),
-    TourUseCase(
-      repo: TourRepoImpl(
-        dataSource: TourCategoryApiImp(
-          dio: Dio(),
-        ),
-      ),
-    ),
+    getIt<CategoryUseCase>(),
+    getIt<TourUseCase>(),
   );
   final AppBloc _blocCateg = AppBloc(
-    CategoryUseCase(
-      repo: CategoryRepoImpl(
-        dataSource: CategoryApiImp(
-          dio: Dio(),
-        ),
-      ),
-    ),
-    TourUseCase(
-      repo: TourRepoImpl(
-        dataSource: TourCategoryApiImp(
-          dio: Dio(),
-        ),
-      ),
-    ),
+    getIt<CategoryUseCase>(),
+    getIt<TourUseCase>(),
   );
   final AppBloc _blocDotsIndicator = AppBloc(
     CategoryUseCase(
@@ -82,11 +59,12 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     _blocCateg.add(FetchCategories());
     _blocTour.add(FetchCategoriesTours(id: 1));
-    _blocDotsIndicator.add(UpdateDotsIndicators(id: 0, 4));
+    //_blocDotsIndicator.add(UpdateDotsIndicators(id: 0, 4));
     super.initState();
   }
 
   var _selectedCategory = 0;
+  var _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -146,8 +124,9 @@ class _MainScreenState extends State<MainScreen> {
               pageSnapping: true,
               controller: pageController,
               onPageChanged: (index) {
-                _blocDotsIndicator
-                    .add(UpdateDotsIndicators(id: index, tours.length));
+                setState(
+                  () => _currentPage = index,
+                );
               },
             );
 
@@ -191,7 +170,6 @@ class _MainScreenState extends State<MainScreen> {
                     });
                     _blocTour
                         .add(FetchCategoriesTours(id: _selectedCategory + 1));
-                    _blocDotsIndicator.add(UpdateDotsIndicators(id: 0, 4));
                   },
                 );
               },
@@ -216,16 +194,16 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _createDotsIndicator() {
     return BlocBuilder<AppBloc, CategoryState>(
-      bloc: _blocDotsIndicator,
+      bloc: _blocTour,
       builder: (context, state) {
         switch (state.runtimeType) {
-          case const (CurrentDot):
-            final successData = state as CurrentDot;
-            final currentDots = successData.currentNumber;
-            final currentLenght = successData.length;
+          case const (ToursLoaded):
+            final successData = state as ToursLoaded;
+
+            final currentLenght = successData.dotsLenght;
             return DotsIndicator(
               length: currentLenght,
-              currentTour: currentDots,
+              currentTour: _currentPage,
               activeColor: AppColors.dotColor,
               unActiveColor: AppColors.unActDotColor,
             );

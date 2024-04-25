@@ -25,7 +25,7 @@ class AppBloc extends Bloc<CategoryEvent, CategoryState> {
     emit(Loading());
     try {
       final tours = await _getToursUseCase.call(event.id);
-      emit(ToursLoaded(tours: tours));
+      emit(ToursLoaded(tours: tours, dotsLenght: tours.length));
     } catch (e) {
       emit(Error(message: e.toString()));
     }
@@ -37,7 +37,9 @@ class AppBloc extends Bloc<CategoryEvent, CategoryState> {
     try {
       final categories = await _getCategoriesUseCase.call(1);
 
-      emit(CategoriesLoaded(categories: categories));
+      emit(CategoriesLoaded(
+        categories: categories,
+      ));
     } catch (e) {
       emit(Error(message: e.toString()));
     }

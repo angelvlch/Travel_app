@@ -6,7 +6,9 @@ class Loading extends CategoryState {}
 
 class ToursLoaded extends CategoryState {
   final List<TourEntity> tours;
-  ToursLoaded({required this.tours});
+  final int dotsLenght;
+
+  ToursLoaded({required this.tours, required this.dotsLenght});
 }
 
 class Error extends CategoryState {
@@ -18,7 +20,9 @@ class Error extends CategoryState {
 class CategoriesLoaded extends CategoryState {
   final List<CategoryEntity> categories;
 
-  CategoriesLoaded({required this.categories});
+  CategoriesLoaded({
+    required this.categories,
+  });
 }
 
 class CurrentDot extends CategoryState {
