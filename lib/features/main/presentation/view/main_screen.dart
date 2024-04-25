@@ -1,15 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/config/route/app_router.gr.dart';
 import 'package:travel_app/core/app/dependencies/di.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
-import 'package:travel_app/features/main/data/data_source/api.dart';
-import 'package:travel_app/features/main/data/repository/categories_repo_imp.dart';
-import 'package:travel_app/features/main/data/repository/tour_repo.dart';
-import 'package:travel_app/features/main/domain/entity/category_entity.dart';
 import 'package:travel_app/features/main/domain/entity/tour_entity.dart';
 import 'package:travel_app/features/main/domain/use_case/categories_use_case.dart';
 import 'package:travel_app/features/main/domain/use_case/tours_use_case.dart';
@@ -50,6 +45,12 @@ class _MainScreenState extends State<MainScreen> {
     _blocTour.add(FetchCategoriesTours(id: 1));
     _blocRecommend.add(FetchCategoriesTours(id: 1));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   var _selectedCategory = 0;
