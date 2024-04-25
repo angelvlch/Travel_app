@@ -1,4 +1,4 @@
-part of 'category_bloc.dart';
+part of 'app_bloc.dart';
 
 abstract class CategoryEvent {}
 

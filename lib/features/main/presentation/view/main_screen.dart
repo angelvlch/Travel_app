@@ -13,7 +13,7 @@ import 'package:travel_app/features/main/domain/entity/category_entity.dart';
 import 'package:travel_app/features/main/domain/entity/tour_entity.dart';
 import 'package:travel_app/features/main/domain/use_case/categories_use_case.dart';
 import 'package:travel_app/features/main/domain/use_case/tours_use_case.dart';
-import 'package:travel_app/features/main/presentation/bloc/category/category_bloc.dart';
+import 'package:travel_app/features/main/presentation/bloc/app/app_bloc.dart';
 import 'package:travel_app/features/place/presentation/view/place_screen.dart';
 import 'package:travel_app/features/widgets/category_dot.dart';
 import 'package:travel_app/features/widgets/dots_indicator.dart';
@@ -30,6 +30,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final pageController =
       PageController(initialPage: 0, viewportFraction: 0.99, keepPage: false);
+
   final AppBloc _blocTour = AppBloc(
     getIt<CategoryUseCase>(),
     getIt<TourUseCase>(),
@@ -38,28 +39,16 @@ class _MainScreenState extends State<MainScreen> {
     getIt<CategoryUseCase>(),
     getIt<TourUseCase>(),
   );
-  final AppBloc _blocDotsIndicator = AppBloc(
-    CategoryUseCase(
-      repo: CategoryRepoImpl(
-        dataSource: CategoryApiImp(
-          dio: Dio(),
-        ),
-      ),
-    ),
-    TourUseCase(
-      repo: TourRepoImpl(
-        dataSource: TourCategoryApiImp(
-          dio: Dio(),
-        ),
-      ),
-    ),
-  );
 
+  final AppBloc _blocRecommend = AppBloc(
+    getIt<CategoryUseCase>(),
+    getIt<TourUseCase>(),
+  );
   @override
   void initState() {
     _blocCateg.add(FetchCategories());
     _blocTour.add(FetchCategoriesTours(id: 1));
-    //_blocDotsIndicator.add(UpdateDotsIndicators(id: 0, 4));
+    _blocRecommend.add(FetchCategoriesTours(id: 1));
     super.initState();
   }
 
@@ -77,7 +66,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
@@ -93,14 +81,62 @@ class _MainScreenState extends State<MainScreen> {
             ),
             const SizedBox(height: 16),
             _createDotsIndicator(),
+            const SizedBox(height: 22),
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text('Recommended',
+                  style: AppFonts.s20Black.copyWith(color: AppColors.black)),
+            ),
+            const SizedBox(height: 18),
+            _createRecommendGrid(),
           ],
         ),
       ),
     );
   }
 
+  Widget _createRecommendGrid() {
+    return BlocBuilder<AppBloc, AppState>(
+      bloc: _blocRecommend,
+      builder: (context, state) {
+        switch (state.runtimeType) {
+          case const (ToursLoaded):
+            final successState = state as ToursLoaded;
+            final tours = successState.tours;
+            return GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: 16,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, crossAxisSpacing: 13, mainAxisSpacing: 13),
+              itemCount: tours.length,
+              itemBuilder: (context, index) => _buildGrid(tours[index]),
+            );
+
+          case const (Loading):
+            return const Center(child: CircularProgressIndicator());
+
+          case const (Error):
+            final badState = state as Error;
+            return Center(
+              child: Text(badState.message, style: AppFonts.s36Black),
+            );
+
+          default:
+            return Center(
+              child: Text('OOooops....', style: AppFonts.s24Bold),
+            );
+        }
+      },
+    );
+  }
+
   Widget _createCarousel() {
-    return BlocBuilder<AppBloc, CategoryState>(
+    return BlocBuilder<AppBloc, AppState>(
       bloc: _blocTour,
       builder: (context, state) {
         switch (state.runtimeType) {
@@ -149,7 +185,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _createTabCategory() {
-    return BlocBuilder<AppBloc, CategoryState>(
+    return BlocBuilder<AppBloc, AppState>(
       bloc: _blocCateg,
       builder: (context, state) {
         switch (state.runtimeType) {
@@ -193,7 +229,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _createDotsIndicator() {
-    return BlocBuilder<AppBloc, CategoryState>(
+    return BlocBuilder<AppBloc, AppState>(
       bloc: _blocTour,
       builder: (context, state) {
         switch (state.runtimeType) {
@@ -245,32 +281,3 @@ class _MainScreenState extends State<MainScreen> {
     AutoRouter.of(context).push(PlaceRoute(tour: tour));
   }
 }
-
-
-
-/* 
-  const SizedBox(height: 22),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Text('Recommended',
-                          style: AppFonts.s20Black
-                              .copyWith(color: AppColors.black)),
-                    ),
-                    const SizedBox(height: 18),
-                    GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        bottom: 16,
-                      ),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 13,
-                              mainAxisSpacing: 13),
-                      itemCount: tours.length,
-                      itemBuilder: (context, index) => _buildGrid(tours[index]),
-                    ),
-*/

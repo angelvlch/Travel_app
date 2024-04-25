@@ -6,10 +6,10 @@ import 'package:travel_app/features/main/domain/entity/tour_entity.dart';
 import 'package:travel_app/features/main/domain/use_case/categories_use_case.dart';
 import 'package:travel_app/features/main/domain/use_case/tours_use_case.dart';
 
-part 'category_event.dart';
-part 'category_state.dart';
+part 'app_event.dart';
+part 'app_state.dart';
 
-class AppBloc extends Bloc<CategoryEvent, CategoryState> {
+class AppBloc extends Bloc<CategoryEvent, AppState> {
   final CategoryUseCase _getCategoriesUseCase;
   final TourUseCase _getToursUseCase;
 
@@ -17,11 +17,10 @@ class AppBloc extends Bloc<CategoryEvent, CategoryState> {
       : super(Loading()) {
     on<FetchCategoriesTours>(_getToursEvent);
     on<FetchCategories>(_getCategoriesEvent);
-    on<UpdateDotsIndicators>(_getCurrentDots);
   }
 
   FutureOr<void> _getToursEvent(
-      FetchCategoriesTours event, Emitter<CategoryState> emit) async {
+      FetchCategoriesTours event, Emitter<AppState> emit) async {
     emit(Loading());
     try {
       final tours = await _getToursUseCase.call(event.id);
@@ -32,7 +31,7 @@ class AppBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   FutureOr<void> _getCategoriesEvent(
-      FetchCategories event, Emitter<CategoryState> emit) async {
+      FetchCategories event, Emitter<AppState> emit) async {
     emit(Loading());
     try {
       final categories = await _getCategoriesUseCase.call(1);
@@ -43,10 +42,5 @@ class AppBloc extends Bloc<CategoryEvent, CategoryState> {
     } catch (e) {
       emit(Error(message: e.toString()));
     }
-  }
-
-  FutureOr<void> _getCurrentDots(
-      UpdateDotsIndicators event, Emitter<CategoryState> emit) {
-    emit(CurrentDot(currentNumber: event.id, event.length));
   }
 }
