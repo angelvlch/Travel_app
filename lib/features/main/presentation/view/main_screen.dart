@@ -77,11 +77,12 @@ class _MainScreenState extends State<MainScreen> {
       ),
     ),
   );
+
   @override
   void initState() {
     _blocCateg.add(FetchCategories());
     _blocTour.add(FetchCategoriesTours(id: 1));
-    _blocDotsIndicator.add(UpdateDotsIndicators(id: 0, getLengt()));
+    _blocDotsIndicator.add(UpdateDotsIndicators(id: 0, 4));
     super.initState();
   }
 
@@ -190,7 +191,7 @@ class _MainScreenState extends State<MainScreen> {
                     });
                     _blocTour
                         .add(FetchCategoriesTours(id: _selectedCategory + 1));
-                    _blocDotsIndicator.add(UpdateDotsIndicators(id: 0, 3));
+                    _blocDotsIndicator.add(UpdateDotsIndicators(id: 0, 4));
                   },
                 );
               },
