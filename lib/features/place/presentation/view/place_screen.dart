@@ -1,5 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
 import 'package:travel_app/core/constants/app_icon.dart';
@@ -7,10 +7,10 @@ import 'package:travel_app/features/main/domain/entity/tour_entity.dart';
 import 'package:travel_app/features/place/presentation/view/button_sheet.dart';
 import 'package:travel_app/features/widgets/custom_elevated_button.dart';
 
-@RoutePage()
 class PlaceScreen extends StatefulWidget {
-  final TourEntity tour;
-  const PlaceScreen({super.key, required this.tour});
+  const PlaceScreen({
+    super.key,
+  });
 
   @override
   State<PlaceScreen> createState() => _PlaceScreenState();
@@ -48,9 +48,9 @@ class _PlaceScreenState extends State<PlaceScreen> {
             height: MediaQuery.of(context).size.height / 2.4,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.cover,
                 image: NetworkImage(
-                    'https://s3-alpha-sig.figma.com/img/53f0/a2d9/7918d6643e5e010ee92c558f998a4488?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BXZQyQ9OVazMU2vpO3vg3qBYerpCY-DjZY2fSfTwD0sDaNhwS5zsXFofK56wZTZPQKsvTU9O3Yl5SS0avH-kE1gVKvkFqPvKCVrnKqgq5aeJEgvusYPcTEa67-hR34VI~zJcK8ZrFoml5D3m7FhCn~YXbXOE6OfjHuL7YiczpIWmHFuEwOLaghDc74PHfB-hoirGZrf6Yj6uVVFTC93698pKSIYui9m3wvfcxR0bYhl8iqAydCKU22oDxspWi3QFp0kniXn6Q2xLzovCs8cDiuVDTaVVt4q4IXq1NT397bRiapJ8Q6h6N42jWiImIS9sptA2tBThikmUFgVLRt-MFQ__'),
+                    'https://s3-alpha-sig.figma.com/img/d9f0/f9a4/0b9907df480b626dd3a8dd032c8292df?Expires=1718582400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hpJI74VaRQD6zS~l7IAlvCtw7wzB9Hz4jWWhxML2QsM3T1N7raEn7YCaLwHgwaNn-pfO728RNXTWCjksyNqT9xKhQsO1zGAT0RtN-~HfrmS6sGpTY3XkG-IcnNAS8sYMacAF9Syuiv~reTQ57~OsR0q-YBN6Yj4PjUMPfxwmzr7j0A0TPdIMyMqjKkmef62jMsKa0guUCxISRXdvy~cWifP7kvEkw8GEdS2J0IaRRb3DLXmaMpz1k2flNH1eS~n6XH2VibPzZfePBNYo34PthMWonLRWslfjXW~J~~uxDXUsg0snH3POgjMeCHq~VLdtDsj4~aS75KSxMJ9sQcWncg__'),
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -80,53 +80,55 @@ class _PlaceScreenState extends State<PlaceScreen> {
               decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(36)),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16, top: 20),
-                      child: Text('Mount Fuji', style: AppFonts.s32Black),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(width: 16),
-                        const Icon(Icons.location_on_outlined, weight: 14),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Honshu, Japan',
-                          style:
-                              AppFonts.s12Med.copyWith(color: AppColors.black),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 16,
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Text('Mount Fuji', style: AppFonts.s32Black),
                       ),
-                      child: Text('Description', style: AppFonts.s20Sem),
-                    ),
-                    const SizedBox(height: 6),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
-                          style: AppFonts.s16Reg),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 16, top: 22),
-                        child: Text('Reviews', style: AppFonts.s20Sem)),
-                    Column(
-                        children: List<Widget>.generate(reviews.length,
-                            (index) => _createReview(reviews[index]))),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 9,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          const Icon(Icons.location_on_outlined, weight: 14),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Honshu, Japan',
+                            style: AppFonts.s12Med
+                                .copyWith(color: AppColors.black),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                        ),
+                        child: Text('Description', style: AppFonts.s20Sem),
+                      ),
+                      const SizedBox(height: 6),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
+                            style: AppFonts.s16Reg),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 16, top: 22),
+                          child: Text('Reviews', style: AppFonts.s20Sem)),
+                      Column(
+                          children: List<Widget>.generate(reviews.length,
+                              (index) => _createReview(reviews[index]))),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 9,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

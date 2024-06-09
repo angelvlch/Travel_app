@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:travel_app/config/route/app_router.gr.dart';
 
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
@@ -9,7 +7,6 @@ import 'package:travel_app/core/constants/app_icon.dart';
 import 'package:travel_app/core/constants/app_images.dart';
 import 'package:travel_app/features/widgets/custom_elevated_button.dart';
 
-@RoutePage()
 class BoardingScreen extends StatefulWidget {
   const BoardingScreen({super.key});
 
@@ -19,7 +16,7 @@ class BoardingScreen extends StatefulWidget {
 
 class _BoardingScreenState extends State<BoardingScreen> {
   void _onTap() {
-    AutoRouter.of(context).push(const MainRoute());
+    Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
   }
 
   @override

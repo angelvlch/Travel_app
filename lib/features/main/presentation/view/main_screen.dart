@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_app/config/route/app_router.gr.dart';
+
 import 'package:travel_app/core/app/dependencies/di.dart';
 import 'package:travel_app/core/constants/app_colors.dart';
 import 'package:travel_app/core/constants/app_fonts.dart';
@@ -14,7 +13,6 @@ import 'package:travel_app/features/widgets/category_dot.dart';
 import 'package:travel_app/features/widgets/dots_indicator.dart';
 import 'package:travel_app/features/widgets/tour_card.dart';
 
-@RoutePage()
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -267,7 +265,7 @@ class _MainScreenState extends State<MainScreen> {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => PlaceScreen(tour: tour),
+          builder: (context) => const PlaceScreen(),
         ),
       ),
       child: TourCard(
@@ -279,7 +277,10 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  _onTap(TourEntity tour) {
-    AutoRouter.of(context).push(PlaceRoute(tour: tour));
+  void _onTap(TourEntity tour) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PlaceScreen()),
+    );
   }
 }
