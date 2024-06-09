@@ -28,17 +28,19 @@ dependencies:
   flutter_bloc: ^8.1.4
 
   cupertino_icons: ^1.0.6
+  http: ^1.2.1
 
 dev_dependencies:
   json_serializable: ^6.6.0
   flutter_test:
     sdk: flutter
   auto_route_generator: ^8.0.0
-  build_runner: ^2.4.8
+  build_runner: ^2.4.9
 
   
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  mockito: ^5.4.4
 
 
 flutter:
